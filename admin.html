@@ -99,12 +99,8 @@ async function loadUsers() {
   try {
     const res = await fetch(`${SUPABASE_URL}/functions/v1/list-users`, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        apikey: SUPABASE_ANON_KEY,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({}),
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ token: accessToken }),
     });
     const data = await res.json();
     if (!res.ok) {
@@ -150,12 +146,8 @@ async function generateCode(email, index) {
   try {
     const res = await fetch(`${SUPABASE_URL}/functions/v1/super-processor`, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        apikey: SUPABASE_ANON_KEY,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email }),
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ token: accessToken, email: email }),
     });
     const data = await res.json();
     if (!res.ok) {
