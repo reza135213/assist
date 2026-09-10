@@ -102,9 +102,11 @@ async function loadUsers() {
       headers: { "Content-Type": "text/plain" },
       body: JSON.stringify({ token: accessToken }),
     });
-    const data = await res.json();
+    const rawText = await res.text();
+    let data;
+    try { data = JSON.parse(rawText); } catch(e) { data = {}; }
     if (!res.ok) {
-      listEl.innerHTML = `<div class="card error">${data.error || "خطا در دریافت لیست"}</div>`;
+      listEl.innerHTML = `<div class="card error">کد: ${res.status}<br/>پیام: ${data.error || rawText || "نامشخص"}</div>`;
       return;
     }
 
